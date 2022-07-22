@@ -3,55 +3,72 @@ import React, {useState} from 'react'
 
 export default function TextForm(props) {
     const[text, setText] = useState("") ;
-     const [nowords,setwords] = useState(0) ;
+    // const [nowords,setwords] = useState(0) ;
 
-     const countwords = (e)=>{
-        console.log(text) ;
-        let c = text.split(" ").length ;
-        console.log(text.split(" ")) ;
-        if(text.charAt(text.length-1)===' '){
-            c-- ;
-        }
-        console.log(c) ;
-         setwords(c) ;
-    }
+    //  const countwords = (e)=>{
+    //     console.log(text) ;
+    //     let c = text.split(" ").length ;
+    //     console.log(text.split(" ")) ;
+    //     if(text.charAt(text.length-1)===' '){
+    //         c-- ;
+    //     }
+    //     console.log(c) ;
+    //      setwords(c) ;
+    // }
 
     // setwords(c) ;
 
     
     const onchangeHandler = (e)=> {
         setText(e.target.value) ;
-        countwords() ;
+       // countwords() ;
     }
-
+    
     const clickUPhandler = ()=> {
+        let text2 = text.trim() ;
+       // console.log(text2.length) ;
+        if(text2.length===0) return ;
         let newtext = text.toUpperCase() ;
         setText(newtext) ;
         props.alert('Converted to uppercase','success');
     }
 
     const clickLWhandler = ()=> {
+        let text2 = text.trim() ;
+        // console.log(text2.length) ;
+         if(text2.length===0) return ;
         let newtext = text.toLowerCase() ;
         setText(newtext) ;
         props.alert('Converted to lowercase','success');
     }
 
     const clearText = ()=> {
+        let text2 = text.trim() ;
+        // console.log(text2.length) ;
+         if(text2.length===0) return ;
         let newtext = '' ;
         setText(newtext) ;
         props.alert('Text cleared','success');
     }
 
     const copytext = () => {
-        let text = document.getElementById('textarea') ;
-        text.select() ;
-        navigator.clipboard.writeText(text.value) ;
+        let text2 = text.trim() ;
+        // console.log(text2.length) ;
+         if(text2.length===0) return ;
+        let text3 = document.getElementById('textarea') ;
+        text3.select() ;
+        navigator.clipboard.writeText(text3.value) ;
         props.alert('Copied to clipboard','success');
     }
 
     const removespace = () => {
+        let text2 = text.trim() ;
+        // console.log(text2.length) ;
+         if(text2.length===0){ setText('')} ;
         let newtext = text.split(/[ ]+/) ;
         setText(newtext.join(' ')) ;
+
+        if(text.length!==text2.length)
         props.alert('Extra spaces removed','success');
     }
     
@@ -74,7 +91,7 @@ export default function TextForm(props) {
     
     <div className={`container my-3 text-${props.mode==='light'? 'dark':'light'}`}>
         <h3>Text Summary</h3>
-        <p><b>{nowords}</b> words and <b>{text.length}</b> characters</p>
+        <p><b>{text.split(" ").filter((element) => { return element.length!==0}).length}</b> words and <b>{text.trim().length}</b> characters</p>
 
         <h3>Preview</h3>
         <p>{text}</p>
